@@ -1,7 +1,29 @@
+const messages = [
+    "There are 3 numbers to find, can you do it?",
+    "Almost there, but not quite there yet.",
+    "These numbers are 'odd'. Can you guess them?",
+    "Better luck next time! Keep going.",
+    "Not this password either. You can do it!",
+    "Hmm, still not the correct one unfortunately.",
+    "It would be best to start from the start!!!",
+    "Keep pressing, you'll get it eventually!",
+     "Wrong again! Don't give up! Keep trying.",
+    "The password is as easy as 1,2,3 but 'odd'!",
+    "Not quite. Keep pressing those buttons!",
+    "Nope, that's not it. Don't lose hope!",
+    "Start from number 1 and press the odd ones",
+    "Almost there, I promise. Cross my heart!",
+    "Start from the 'start' and then press '3'.",
+    "You're getting closer, but this isn't it.",
+    "There is also a '5' in the password, somewhere.",
+];
+
+
 let password = [1, 3, 5];
 let inputSequence = [];
-let messages = ["Message 1", "Message 2", "Message 3"];
-let messageIndex = 0;
+let currentIndex = 0;
+let stopExecution = false;
+
 
 function handleButtonPress(buttonNumber) {
     checkPassword(buttonNumber);
@@ -16,16 +38,22 @@ function checkPassword(buttonNumber) {
             document.getElementById('dText').textContent = "CONGRATULATIONS. YOU WON!!!";
             document.getElementById('dButton').style.backgroundColor = "cyan";
         } else {
-            document.getElementById('dText').innerText = 'Wrong Password. Try again!!!';
+            document.getElementById('dText').innerText = 'The numbers are in series if this helps.';
         }
         inputSequence = [];
     }
 }
 
+
 function cycleMessage() {
-    messageIndex = (messageIndex + 1) % messages.length;
-    console.log(messages[messageIndex]);
+    if (stopExecution) return;
+         const dText = document.getElementById('dText');
+         dText.innerText = messages[currentIndex];
+         currentIndex = (currentIndex + 1) % messages.length;
+         document.getElementById('dButton').style.backgroundColor = "bisque";
+         document.getElementById('dText').style.color = "black";
 }
+
 
 
 function resetPage() {
