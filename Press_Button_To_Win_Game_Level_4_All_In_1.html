@@ -36,16 +36,26 @@ body {
     border-radius: 10px;
     padding: 10px;
 }
-#dButton {
+#dText {
     font-size: xx-large;
     border: solid black;
     padding: 10px;
     background-color: bisque;
     border: solid black;
     width: fit-content;
-    padding: 8px;
     margin: -30px auto;
     }
+#dText2 {
+    font-size: xx-large;
+    border: solid black;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+    padding: 10px;
+    border: solid black;
+    width: fit-content;
+    margin: 10px auto;
+}
 #drButton {
     background-color: black;
     color: aliceblue;
@@ -63,9 +73,9 @@ body {
     <br>
     <p id="text0">LEVEL 4</p>
     <br>
-    <button id="dButton"><p id="dText">Press the Correct password to win the game.</p></button>
+    <p id="dText">Press the Correct password to win the game.</p>
     <br>
-    <br>
+    <p id="dText2">Password</p>
       <div class="container">
         <div class="page1">
           <button id="button1" onclick="cycleMessage(); handleButtonPress(1);">Button 1</button>
@@ -81,7 +91,6 @@ body {
       </div>
    </div>
     <br>
-    <br>
     <div><button id="drButton" onclick="resetPage()">Reset Game</button></div>
     <script>
 const messages = [
@@ -93,7 +102,7 @@ const messages = [
     "Hmm, still not the correct one unfortunately.",
     "It would be best to start from the start!!!",
     "Keep pressing, you'll get it eventually!",
-     "Wrong again! Don't give up! Keep trying.",
+    "Wrong again! Don't give up! Keep trying.",
     "The password is as easy as 1,2,3 but 'odd'!",
     "Not quite. Keep pressing those buttons!",
     "Nope, that's not it. Don't lose hope!",
@@ -104,15 +113,16 @@ const messages = [
     "There is also a '5' in the password, somewhere.",
 ];
 
-
 let password = [1, 3, 5];
 let inputSequence = [];
 let currentIndex = 0;
 let stopExecution = false;
 
-
 function handleButtonPress(buttonNumber) {
     checkPassword(buttonNumber);
+    if (!stopExecution) {
+        displayPressedButtons();
+    }
 }
 
 function checkPassword(buttonNumber) {
@@ -122,30 +132,40 @@ function checkPassword(buttonNumber) {
         if (inputSequence.every((num, index) => num === password[index])) {
             stopExecution = true;
             document.getElementById('dText').textContent = "CONGRATULATIONS. YOU WON!!!";
-            document.getElementById('dButton').style.backgroundColor = "cyan";
+            document.getElementById('dText').style.backgroundColor = "cyan";
+            displayPressedButtons();
+            return;
         } else {
-            document.getElementById('dText').innerText = 'The numbers are in series if this helps.';
+            document.getElementById('dText').innerText = 'Incorrect Password. Try again!';
         }
         inputSequence = [];
+        resetPressedButtons();
     }
 }
 
+function displayPressedButtons() {
+    const pressedButtonsElement = document.getElementById('dText2');
+    pressedButtonsElement.textContent = `Password: ${inputSequence.join(', ')}`;
+}
+
+function resetPressedButtons() {
+    const pressedButtonsElement = document.getElementById('dText2');
+    pressedButtonsElement.textContent = '';
+    inputSequence = []; 
+}
 
 function cycleMessage() {
     if (stopExecution) return;
-         const dText = document.getElementById('dText');
-         dText.innerText = messages[currentIndex];
-         currentIndex = (currentIndex + 1) % messages.length;
-         document.getElementById('dButton').style.backgroundColor = "bisque";
-         document.getElementById('dText').style.color = "black";
+    const dText = document.getElementById('dText');
+    dText.innerText = messages[currentIndex];
+    currentIndex = (currentIndex + 1) % messages.length;
+    document.getElementById('dText').style.backgroundColor = "bisque";
+    document.getElementById('dText').style.color = "black";
 }
-
-
 
 function resetPage() {
     location.reload();
 }
-
 
     </script>
 </body>
