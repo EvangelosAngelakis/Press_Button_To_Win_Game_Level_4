@@ -36,9 +36,11 @@ function checkPassword(buttonNumber) {
         if (inputSequence.every((num, index) => num === password[index])) {
             stopExecution = true;
             document.getElementById('dText').textContent = "CONGRATULATIONS. YOU WON!!!";
-            document.getElementById('dButton').style.backgroundColor = "cyan";
+            document.getElementById('dText').style.backgroundColor = "cyan";
+            return;
         } else {
             document.getElementById('dText').innerText = 'The numbers are in series if this helps.';
+            return;
         }
         inputSequence = [];
     }
@@ -50,7 +52,7 @@ function cycleMessage() {
          const dText = document.getElementById('dText');
          dText.innerText = messages[currentIndex];
          currentIndex = (currentIndex + 1) % messages.length;
-         document.getElementById('dButton').style.backgroundColor = "bisque";
+         document.getElementById('dText').style.backgroundColor = "bisque";
          document.getElementById('dText').style.color = "black";
 }
 
